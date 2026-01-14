@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hammad | AI & Java Developer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #050505; /* Deep Black */
+            color: #ffffff;
+            font-family: 'Poppins', sans-serif;
+            height: 100vh;
+            overflow: hidden; /* Prevents scroll bars for the splash screen */
+        }
+
+        /* --- Navigation Bar --- */
+        nav {
+            display: flex;
+            padding: 20px 50px;
+            align-items: center;
+            position: absolute;
+            width: 100%;
+            top: 0;
+        }
+
+        .nav-btn {
+            background: #8A2BE2; /* Neon Purple */
+            color: white;
+            padding: 10px 25px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-right: 30px;
+            transition: transform 0.2s;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: #aaa;
+            text-decoration: none;
+            margin-right: 30px;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        /* --- Main Center Content --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* The Signature Style */
+        .signature {
+            font-family: 'Sacramento', cursive;
+            font-size: 8rem;
+            color: #00e5ff; /* Cyan Neon */
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            /* Animation Setup */
+            width: 0; 
+            animation: sign 3s steps(60) forwards; 
+        }
+
+        /* Subtitle */
+        .subtitle {
+            margin-top: 10px;
+            font-size: 1.5rem;
+            color: #888;
+            opacity: 0;
+            animation: fadeIn 2s ease forwards;
+            animation-delay: 2.5s; /* Wait for signature to finish */
+        }
+
+        .subtitle span {
+            color: #8A2BE2; /* Purple Accent */
+        }
+
+        /* --- Animations --- */
+        @keyframes sign {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .signature { font-size: 4rem; }
+            nav { padding: 20px; justify-content: center; }
+            .nav-link { display: none; } /* Hide text links on mobile */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#about" class="nav-btn">Highlights</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="https://github.com/hammadist2005" class="nav-link">GitHub</a>
+    </nav>
+
+    <section class="hero">
+        <h1 class="signature">Hammad</h1>
+        
+        <div class="subtitle">
+            AI Hardware <span>|</span> Java Developer <span>|</span> Database Systems
+        </div>
+    </section>
+
+</body>
+</html>
