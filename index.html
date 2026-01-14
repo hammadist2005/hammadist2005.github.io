@@ -11,14 +11,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            scroll-behavior: smooth; /* Enables smooth scrolling */
         }
 
         body {
             background-color: #050505; /* Deep Black */
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            overflow: hidden; /* Prevents scroll bars for the splash screen */
+            overflow-x: hidden; /* Only hide horizontal scroll */
         }
 
         /* --- Navigation Bar --- */
@@ -26,9 +26,12 @@
             display: flex;
             padding: 20px 50px;
             align-items: center;
-            position: absolute;
+            position: fixed; /* Fixed so it stays on top while scrolling */
             width: 100%;
             top: 0;
+            z-index: 1000;
+            background: rgba(5, 5, 5, 0.8); /* Slight transparent background */
+            backdrop-filter: blur(5px);
         }
 
         .nav-btn {
@@ -58,7 +61,7 @@
             color: white;
         }
 
-        /* --- Main Center Content --- */
+        /* --- Main Center Content (Hero) --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -106,6 +109,77 @@
             to { opacity: 1; }
         }
 
+        /* --- About Section Styles --- */
+        .about-section {
+            background-color: #0b0b0b; /* Slightly lighter black */
+            min-height: 100vh;
+            padding: 100px 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .section-title span {
+            color: #8A2BE2; /* Neon Purple */
+        }
+
+        .about-text {
+            max-width: 800px;
+            text-align: center;
+            font-size: 1.1rem;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 50px;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .skill-card {
+            background: #111;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #333;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-card h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .skill-card p {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Hover Effects */
+        .skill-card:hover {
+            transform: translateY(-10px);
+            border-color: #8A2BE2;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); /* Purple Glow */
+        }
+        
+        .skill-card:hover h3 {
+            color: #8A2BE2;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .signature { font-size: 4rem; }
@@ -127,6 +201,40 @@
         
         <div class="subtitle">
             AI Hardware <span>|</span> Java Developer <span>|</span> Database Systems
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <h2 class="section-title">About <span>Me</span></h2>
+        
+        <p class="about-text">
+            I am a Computer Science undergraduate passionate about bridging the gap between 
+            <strong>Hardware</strong> and <strong>Software</strong>. 
+            Currently, I am building AI-driven solutions like <em>Neuro-fix</em> and robust 
+            management systems using Java. I love turning complex problems into clean code.
+        </p>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h3>Python</h3>
+                <p>AI & Scripting</p>
+            </div>
+            <div class="skill-card">
+                <h3>Java</h3>
+                <p>Enterprise Apps</p>
+            </div>
+            <div class="skill-card">
+                <h3>MySQL</h3>
+                <p>Database Mgmt</p>
+            </div>
+            <div class="skill-card">
+                <h3>OpenCV</h3>
+                <p>Computer Vision</p>
+            </div>
+            <div class="skill-card">
+                <h3>Hardware</h3>
+                <p>System Integration</p>
+            </div>
         </div>
     </section>
 
