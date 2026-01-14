@@ -14,13 +14,12 @@
         }
 
         body {
-            background-color: #050505; /* Deep Black */
+            background-color: #050505;
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
         }
 
-        /* --- Navigation Bar --- */
         nav {
             display: flex;
             padding: 20px 50px;
@@ -47,13 +46,12 @@
 
         .nav-item.active {
             color: white;
-            background-color: #8A2BE2; /* Neon Purple */
+            background-color: #8A2BE2;
             transform: scale(1.05);
         }
 
         .nav-item:hover { color: white; }
 
-        /* --- Hero Section --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -71,8 +69,8 @@
             position: relative;
             overflow: hidden;
             white-space: nowrap;
-            width: 0; 
-            animation: sign 3s steps(60) forwards; 
+            width: 0;
+            animation: sign 3s steps(60) forwards;
         }
 
         .subtitle {
@@ -83,6 +81,7 @@
             animation: fadeIn 2s ease forwards;
             animation-delay: 2.5s;
         }
+
         .subtitle span { color: #8A2BE2; }
 
         .hero-btn {
@@ -95,10 +94,11 @@
             border-radius: 30px;
             text-decoration: none;
             transition: all 0.3s ease;
-            opacity: 0; 
+            opacity: 0;
             animation: fadeIn 2s ease forwards;
-            animation-delay: 3s; 
+            animation-delay: 3s;
         }
+
         .hero-btn:hover {
             background: #8A2BE2;
             box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
@@ -108,7 +108,6 @@
         @keyframes sign { from { width: 0; } to { width: 100%; } }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- PROJECTS SECTION --- */
         .projects-section {
             background-color: #050505;
             padding: 100px 50px;
@@ -167,22 +166,24 @@
         }
 
         .btn-group { margin-top: 10px; display: flex; gap: 15px; }
-        
-        .btn-outline { 
+
+        .btn-outline {
             padding: 10px 25px;
             border-radius: 20px;
             text-decoration: none;
             font-weight: 600;
-            background: transparent; 
-            color: #fff; 
-            border: 1px solid #8A2BE2; 
+            background: transparent;
+            color: #fff;
+            border: 1px solid #8A2BE2;
             transition: 0.3s;
         }
+
         .btn-outline:hover { background: #8A2BE2; color: white; }
 
         .project-img {
             flex: 1.2;
         }
+
         .project-img img {
             width: 100%;
             border-radius: 10px;
@@ -190,7 +191,6 @@
             border: 1px solid #333;
         }
 
-        /* --- About Section --- */
         .about-section {
             background-color: #0b0b0b;
             min-height: 100vh;
@@ -229,13 +229,16 @@
             border-radius: 15px;
             transition: all 0.3s ease;
         }
+
         .skill-card h3 { color: #fff; margin-bottom: 10px; }
         .skill-card p { color: #888; }
+
         .skill-card:hover {
             transform: translateY(-10px);
             border-color: #8A2BE2;
             box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
         }
+
         .skill-card:hover h3 { color: #8A2BE2; }
 
         @media (max-width: 900px) {
@@ -247,133 +250,136 @@
         }
     </style>
 </head>
+
 <body>
 
-    <nav>
-        <a href="#home" class="nav-item active">Highlights</a>
-        <a href="#projects" class="nav-item">Projects</a>
-        <a href="#about" class="nav-item">About</a>
-        <a href="https://github.com/hammadist2005" class="nav-item" target="_blank">GitHub</a>
-    </nav>
+<nav>
+    <a href="#home" class="nav-item active">Highlights</a>
+    <a href="#projects" class="nav-item">Projects</a>
+    <a href="#about" class="nav-item">About</a>
+    <a href="https://github.com/hammadist2005" class="nav-item" target="_blank">GitHub</a>
+</nav>
 
-    <section id="home" class="hero">
-        <h1 class="signature">Hammad</h1>
-        <div class="subtitle">
-            AI Hardware <span>|</span> Java Developer <span>|</span> Database Systems
-        </div>
-        <a href="#projects" class="hero-btn">View Projects</a>
-    </section>
+<section id="home" class="hero">
+    <h1 class="signature">Hammad</h1>
+    <div class="subtitle">
+        AI Hardware <span>|</span> Java Developer <span>|</span> Database Systems
+    </div>
+    <a href="#projects" class="hero-btn">View Projects</a>
+</section>
 
-    <section id="projects" class="projects-section">
-        <h2 class="section-title">Featured <span>Work</span></h2>
+<section id="projects" class="projects-section">
+    <h2 class="section-title">Featured <span>Work</span></h2>
 
-        <div class="project-card">
-            <div class="project-info">
-                <h3>Neuro-fix</h3>
-                <p>
-                    A powerful AI Hardware Assistant. It combines <strong>Computer Vision (YOLO)</strong> 
-                    to recognize hardware components and a <strong>Llama-3 RAG</strong> engine to query manuals.
-                </p>
-                <div class="tech-stack">
-                    <span>Python</span> <span>OpenCV</span> <span>YOLOv8</span> <span>Llama-3</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://github.com/hammadist2005/Neuro-fix" target="_blank" class="btn-outline">View Code</a>
-                </div>
+    <div class="project-card">
+        <div class="project-info">
+            <h3>Neuro-fix 🧠</h3>
+            <p>
+                A powerful AI Hardware Assistant. It combines <strong>Computer Vision (YOLO)</strong>
+                to recognize hardware components and a <strong>Llama-3 RAG</strong> engine to query manuals.
+            </p>
+            <div class="tech-stack">
+                <span>Python</span> <span>OpenCV</span> <span>YOLOv8</span> <span>Llama-3</span>
             </div>
-            <div class="project-img">
-                <img src="https://github.com/hammadist2005/hammadist2005.github.io/blob/main/neurosc.jpg?raw=true" alt="Neuro-fix Dashboard">
+            <div class="btn-group">
+                <a href="https://github.com/hammadist2005/Neuro-fix" target="_blank" class="btn-outline">View Code</a>
             </div>
         </div>
+        <div class="project-img">
+            <!-- ONLY CHANGE IS HERE -->
+            <img src="images/neurosc.jpg" alt="Neuro-fix Dashboard">
+        </div>
+    </div>
 
-        <div class="project-card">
-            <div class="project-info">
-                <h3>Blood Bank Management System</h3>
-                <p>
-                    A full-scale management system featuring a <strong>Live Dashboard</strong> with real-time updates 
-                    and <strong>Color-Coded Stock Details</strong> for instant inventory awareness. 
-                    Built with Java and MySQL for high reliability.
-                </p>
-                <div class="tech-stack">
-                    <span>Java</span> <span>MySQL</span> <span>JDBC</span> <span>UI/UX</span>
-                </div>
-                <div class="btn-group">
-                    <a href="https://github.com/hammadist2005/Blood-Bank-Management-System" target="_blank" class="btn-outline">View Code</a>
-                </div>
+    <div class="project-card">
+        <div class="project-info">
+            <h3>Blood Bank Management System 🩸</h3>
+            <p>
+                A full-scale management system featuring a <strong>Live Dashboard</strong> with real-time updates
+                and <strong>Color-Coded Stock Details</strong> for instant inventory awareness.
+                Built with Java and MySQL for high reliability.
+            </p>
+            <div class="tech-stack">
+                <span>Java</span> <span>MySQL</span> <span>JDBC</span> <span>UI/UX</span>
             </div>
-            <div class="project-img">
-                <img src="https://github.com/user-attachments/assets/0304faa1-d3fa-4727-bc53-8b7946b5b25e" alt="Blood Bank Dashboard">
+            <div class="btn-group">
+                <a href="https://github.com/hammadist2005/Blood-Bank-Management-System" target="_blank" class="btn-outline">View Code</a>
             </div>
         </div>
-    </section>
-
-    <section id="about" class="about-section">
-        <h2 class="section-title">About <span>Me</span></h2>
-        <p class="about-text">
-            I am a <strong>Software Engineering undergraduate</strong> passionate about bridging the gap between 
-            <strong>Hardware</strong> and <strong>Software</strong>. 
-        </p>
-
-        <div class="skills-grid">
-            <div class="skill-card"><h3>Python</h3><p>AI & Scripting</p></div>
-            <div class="skill-card"><h3>Java</h3><p>Enterprise Apps</p></div>
-            <div class="skill-card"><h3>MySQL</h3><p>Database Mgmt</p></div>
-            <div class="skill-card"><h3>OpenCV</h3><p>Computer Vision</p></div>
-            <div class="skill-card"><h3>Hardware</h3><p>System Integration</p></div>
+        <div class="project-img">
+            <img src="https://github.com/user-attachments/assets/0304faa1-d3fa-4727-bc53-8b7946b5b25e" alt="Blood Bank Dashboard">
         </div>
-    </section>
+    </div>
+</section>
 
-    <script>
-        function smoothScroll(target, duration) {
-            var target = document.querySelector(target);
-            var targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
-            var startPosition = window.pageYOffset;
-            var distance = targetPosition - startPosition;
-            var startTime = null;
+<section id="about" class="about-section">
+    <h2 class="section-title">About <span>Me</span></h2>
+    <p class="about-text">
+        I am a <strong>Software Engineering undergraduate</strong> passionate about bridging the gap between
+        <strong>Hardware</strong> and <strong>Software</strong>.
+    </p>
 
-            function animation(currentTime) {
-                if (startTime === null) startTime = currentTime;
-                var timeElapsed = currentTime - startTime;
-                var run = ease(timeElapsed, startPosition, distance, duration);
-                window.scrollTo(0, run);
-                if (timeElapsed < duration) requestAnimationFrame(animation);
-            }
+    <div class="skills-grid">
+        <div class="skill-card"><h3>Python</h3><p>AI & Scripting</p></div>
+        <div class="skill-card"><h3>Java</h3><p>Enterprise Apps</p></div>
+        <div class="skill-card"><h3>MySQL</h3><p>Database Mgmt</p></div>
+        <div class="skill-card"><h3>OpenCV</h3><p>Computer Vision</p></div>
+        <div class="skill-card"><h3>Hardware</h3><p>System Integration</p></div>
+    </div>
+</section>
 
-            function ease(t, b, c, d) {
-                t /= d / 2;
-                if (t < 1) return c / 2 * t * t + b;
-                t--;
-                return -c / 2 * (t * (t - 2) - 1) + b;
-            }
-            requestAnimationFrame(animation);
+<script>
+    function smoothScroll(target, duration) {
+        var target = document.querySelector(target);
+        var targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        var startPosition = window.pageYOffset;
+        var distance = targetPosition - startPosition;
+        var startTime = null;
+
+        function animation(currentTime) {
+            if (startTime === null) startTime = currentTime;
+            var timeElapsed = currentTime - startTime;
+            var run = ease(timeElapsed, startPosition, distance, duration);
+            window.scrollTo(0, run);
+            if (timeElapsed < duration) requestAnimationFrame(animation);
         }
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                var targetId = this.getAttribute('href');
-                smoothScroll(targetId, 1000); 
-            });
-        });
+        function ease(t, b, c, d) {
+            t /= d / 2;
+            if (t < 1) return c / 2 * t * t + b;
+            t--;
+            return -c / 2 * (t * (t - 2) - 1) + b;
+        }
+        requestAnimationFrame(animation);
+    }
 
-        const sections = document.querySelectorAll('section');
-        const navItems = document.querySelectorAll('.nav-item');
-
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                if (scrollY >= (sectionTop - 200)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            navItems.forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('href').includes(current)) {
-                    item.classList.add('active');
-                }
-            });
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            var targetId = this.getAttribute('href');
+            smoothScroll(targetId, 1000);
         });
-    </script>
+    });
+
+    const sections = document.querySelectorAll('section');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (scrollY >= (sectionTop - 200)) {
+                current = section.getAttribute('id');
+            }
+        });
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            if (item.getAttribute('href').includes(current)) {
+                item.classList.add('active');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
