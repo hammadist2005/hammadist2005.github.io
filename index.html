@@ -11,14 +11,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            scroll-behavior: smooth; /* Enables smooth scrolling */
+        }
+
+        html {
+            scroll-behavior: smooth; /* This forces the smooth gliding effect */
         }
 
         body {
             background-color: #050505; /* Deep Black */
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden; /* Only hide horizontal scroll */
+            overflow-x: hidden;
         }
 
         /* --- Navigation Bar --- */
@@ -26,38 +29,35 @@
             display: flex;
             padding: 20px 50px;
             align-items: center;
-            position: fixed; /* Fixed so it stays on top while scrolling */
+            position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            background: rgba(5, 5, 5, 0.8); /* Slight transparent background */
+            background: rgba(5, 5, 5, 0.9); /* Darker background so text pops */
             backdrop-filter: blur(5px);
         }
 
-        .nav-btn {
-            background: #8A2BE2; /* Neon Purple */
-            color: white;
-            padding: 10px 25px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-right: 30px;
-            transition: transform 0.2s;
-        }
-
-        .nav-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .nav-link {
+        /* Common styles for all nav links */
+        .nav-item {
             color: #aaa;
             text-decoration: none;
             margin-right: 30px;
             font-size: 16px;
-            transition: color 0.3s;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
         }
 
-        .nav-link:hover {
+        /* The "Active" look (Purple Button style) */
+        .nav-item.active {
+            color: white;
+            background-color: #8A2BE2; /* Neon Purple */
+            transform: scale(1.05);
+        }
+
+        .nav-item:hover {
             color: white;
         }
 
@@ -71,47 +71,35 @@
             text-align: center;
         }
 
-        /* The Signature Style */
         .signature {
             font-family: 'Sacramento', cursive;
             font-size: 8rem;
-            color: #00e5ff; /* Cyan Neon */
+            color: #00e5ff;
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
             position: relative;
             overflow: hidden;
             white-space: nowrap;
-            /* Animation Setup */
             width: 0; 
             animation: sign 3s steps(60) forwards; 
         }
 
-        /* Subtitle */
         .subtitle {
             margin-top: 10px;
             font-size: 1.5rem;
             color: #888;
             opacity: 0;
             animation: fadeIn 2s ease forwards;
-            animation-delay: 2.5s; /* Wait for signature to finish */
+            animation-delay: 2.5s;
         }
 
-        .subtitle span {
-            color: #8A2BE2; /* Purple Accent */
-        }
+        .subtitle span { color: #8A2BE2; }
 
-        /* --- Animations --- */
-        @keyframes sign {
-            from { width: 0; }
-            to { width: 100%; }
-        }
+        @keyframes sign { from { width: 0; } to { width: 100%; } }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-
-        /* --- About Section Styles --- */
+        /* --- About Section --- */
         .about-section {
-            background-color: #0b0b0b; /* Slightly lighter black */
+            background-color: #0b0b0b;
             min-height: 100vh;
             padding: 100px 50px;
             display: flex;
@@ -125,10 +113,7 @@
             margin-bottom: 20px;
             color: #fff;
         }
-
-        .section-title span {
-            color: #8A2BE2; /* Neon Purple */
-        }
+        .section-title span { color: #8A2BE2; }
 
         .about-text {
             max-width: 800px;
@@ -139,7 +124,6 @@
             margin-bottom: 50px;
         }
 
-        /* Skills Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -155,50 +139,34 @@
             border: 1px solid #333;
             border-radius: 15px;
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
-        .skill-card h3 {
-            color: #fff;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-        }
+        .skill-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .skill-card p { color: #888; font-size: 0.9rem; }
 
-        .skill-card p {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Hover Effects */
         .skill-card:hover {
             transform: translateY(-10px);
             border-color: #8A2BE2;
-            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3); /* Purple Glow */
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.3);
         }
-        
-        .skill-card:hover h3 {
-            color: #8A2BE2;
-        }
+        .skill-card:hover h3 { color: #8A2BE2; }
 
-        /* Mobile Responsive */
         @media (max-width: 768px) {
             .signature { font-size: 4rem; }
-            nav { padding: 20px; justify-content: center; }
-            .nav-link { display: none; } /* Hide text links on mobile */
+            nav { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#about" class="nav-btn">Highlights</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="https://github.com/hammadist2005" class="nav-link">GitHub</a>
+        <a href="#home" class="nav-item active" id="btn-home">Highlights</a>
+        <a href="#about" class="nav-item" id="btn-about">About</a>
+        <a href="https://github.com/hammadist2005" class="nav-item">GitHub</a>
     </nav>
 
-    <section class="hero">
+    <section id="home" class="hero">
         <h1 class="signature">Hammad</h1>
-        
         <div class="subtitle">
             AI Hardware <span>|</span> Java Developer <span>|</span> Database Systems
         </div>
@@ -237,6 +205,35 @@
             </div>
         </div>
     </section>
+
+    <script>
+        // Get the sections and buttons
+        const sections = document.querySelectorAll('section');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+
+            // Check which section is currently on screen
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                // If we have scrolled 1/3rd into the section
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            // Update the buttons
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href').includes(current)) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
