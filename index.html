@@ -13,15 +13,13 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth; /* This forces the smooth gliding effect */
-        }
+        /* Note: We removed 'scroll-behavior: smooth' because we are doing it with JS now */
 
         body {
             background-color: #050505; /* Deep Black */
             color: #ffffff;
             font-family: 'Poppins', sans-serif;
-            overflow-x: hidden;
+            overflow-x: hidden; /* Hide horizontal scrollbar */
         }
 
         /* --- Navigation Bar --- */
@@ -33,11 +31,11 @@
             width: 100%;
             top: 0;
             z-index: 1000;
-            background: rgba(5, 5, 5, 0.9); /* Darker background so text pops */
+            background: rgba(5, 5, 5, 0.9); /* Dark background */
             backdrop-filter: blur(5px);
         }
 
-        /* Common styles for all nav links */
+        /* Nav Buttons */
         .nav-item {
             color: #aaa;
             text-decoration: none;
@@ -50,7 +48,7 @@
             border-radius: 20px;
         }
 
-        /* The "Active" look (Purple Button style) */
+        /* The "Active" (Purple) State */
         .nav-item.active {
             color: white;
             background-color: #8A2BE2; /* Neon Purple */
@@ -61,7 +59,7 @@
             color: white;
         }
 
-        /* --- Main Center Content (Hero) --- */
+        /* --- Hero Section (Top) --- */
         .hero {
             height: 100vh;
             display: flex;
@@ -71,10 +69,11 @@
             text-align: center;
         }
 
+        /* Signature Animation */
         .signature {
             font-family: 'Sacramento', cursive;
             font-size: 8rem;
-            color: #00e5ff;
+            color: #00e5ff; /* Neon Cyan */
             text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
             position: relative;
             overflow: hidden;
@@ -83,6 +82,7 @@
             animation: sign 3s steps(60) forwards; 
         }
 
+        /* Subtitle Fade In */
         .subtitle {
             margin-top: 10px;
             font-size: 1.5rem;
@@ -97,9 +97,9 @@
         @keyframes sign { from { width: 0; } to { width: 100%; } }
         @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- About Section --- */
+        /* --- About Section (Bottom) --- */
         .about-section {
-            background-color: #0b0b0b;
+            background-color: #0b0b0b; /* Slightly lighter black */
             min-height: 100vh;
             padding: 100px 50px;
             display: flex;
@@ -124,6 +124,7 @@
             margin-bottom: 50px;
         }
 
+        /* Skills Grid */
         .skills-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -151,6 +152,7 @@
         }
         .skill-card:hover h3 { color: #8A2BE2; }
 
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
             .signature { font-size: 4rem; }
             nav { justify-content: center; }
@@ -160,8 +162,8 @@
 <body>
 
     <nav>
-        <a href="#home" class="nav-item active" id="btn-home">Highlights</a>
-        <a href="#about" class="nav-item" id="btn-about">About</a>
+        <a href="#home" class="nav-item active">Highlights</a>
+        <a href="#about" class="nav-item">About</a>
         <a href="https://github.com/hammadist2005" class="nav-item">GitHub</a>
     </nav>
 
@@ -176,7 +178,7 @@
         <h2 class="section-title">About <span>Me</span></h2>
         
         <p class="about-text">
-            I am a Computer Science undergraduate passionate about bridging the gap between 
+            I am a <strong>Software Engineering undergraduate</strong> passionate about bridging the gap between 
             <strong>Hardware</strong> and <strong>Software</strong>. 
             Currently, I am building AI-driven solutions like <em>Neuro-fix</em> and robust 
             management systems using Java. I love turning complex problems into clean code.
@@ -207,25 +209,63 @@
     </section>
 
     <script>
-        // Get the sections and buttons
+        // 1. The Math Function to animate the scroll (ignores browser settings)
+        function smoothScroll(target, duration) {
+            var target = document.querySelector(target);
+            var targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+            var startPosition = window.pageYOffset;
+            var distance = targetPosition - startPosition;
+            var startTime = null;
+
+            function animation(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                var timeElapsed = currentTime - startTime;
+                
+                // Easing function: starts slow, speeds up, slows down
+                var run = ease(timeElapsed, startPosition, distance, duration);
+                
+                window.scrollTo(0, run);
+                
+                if (timeElapsed < duration) requestAnimationFrame(animation);
+            }
+
+            // Quadratic Easing
+            function ease(t, b, c, d) {
+                t /= d / 2;
+                if (t < 1) return c / 2 * t * t + b;
+                t--;
+                return -c / 2 * (t * (t - 2) - 1) + b;
+            }
+
+            requestAnimationFrame(animation);
+        }
+
+        // 2. Attach Click Events to Buttons
+        document.querySelectorAll('.nav-item').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                // Check if it's a section link
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault(); // STOP the instant jump
+                    var targetId = this.getAttribute('href');
+                    
+                    // Run the manual animation for 1000ms (1 second)
+                    smoothScroll(targetId, 1000); 
+                }
+            });
+        });
+
+        // 3. Purple Highlight Logic
         const sections = document.querySelectorAll('section');
         const navItems = document.querySelectorAll('.nav-item');
 
         window.addEventListener('scroll', () => {
             let current = '';
-
-            // Check which section is currently on screen
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                
-                // If we have scrolled 1/3rd into the section
-                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                if (scrollY >= (sectionTop - 200)) {
                     current = section.getAttribute('id');
                 }
             });
-
-            // Update the buttons
             navItems.forEach(item => {
                 item.classList.remove('active');
                 if (item.getAttribute('href').includes(current)) {
