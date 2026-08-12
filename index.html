@@ -1055,9 +1055,26 @@
         });
     });
 
-    // Smooth scroll for every in-page anchor link (belt-and-suspenders
-    // alongside the CSS scroll-behavior, so it's reliably smooth --
-    // including the "Back to top" link -- regardless of browser quirks.
+    // Smooth scroll for every in-page anchor link, hand-rolled with
+    // requestAnimationFrame instead of the native behavior:'smooth' API.
+    // The native API gets silently forced to an instant jump by some
+    // Windows/Chromium setups when the OS "Animation effects" setting is
+    // off -- a rAF-driven scroll isn't a flagged "animation API" the way
+    // scrollIntoView/scroll-behavior are, so it always plays.
+    function animateScrollTo(targetY, duration) {
+        const startY = window.pageYOffset;
+        const distance = targetY - startY;
+        if (Math.abs(distance) < 2) return;
+        const startTime = performance.now();
+        const easeInOutQuad = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+        function step(now) {
+            const t = Math.min((now - startTime) / duration, 1);
+            window.scrollTo(0, startY + distance * easeInOutQuad(t));
+            if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', (e) => {
             const id = link.getAttribute('href');
@@ -1065,7 +1082,8 @@
             const target = document.querySelector(id);
             if (!target) return;
             e.preventDefault();
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const targetY = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset);
+            animateScrollTo(targetY, 700);
             history.pushState(null, '', id);
         });
     });
@@ -1083,8 +1101,6 @@
         const interval = parseInt(carousel.dataset.interval, 10) || 3500;
         let index = 0;
         let timer = null;
-        let hovered = false;
-        let visible = false;
 
         slides.forEach((_, i) => {
             const dot = document.createElement('button');
@@ -1093,7 +1109,8 @@
             if (i === 0) dot.classList.add('active');
             dot.addEventListener('click', () => {
                 goTo(i);
-                restart();
+                stop();
+                start();
             });
             dotsWrap.appendChild(dot);
         });
@@ -1107,34 +1124,34 @@
 
         function next() { goTo(index + 1); }
 
+        // start()/stop() are idempotent and are the ONLY thing that gates
+        // the timer -- no separate "hovered"/"visible" booleans that could
+        // ever get out of sync and leave it stuck paused. Hover and
+        // visibility just call these directly, whichever fires last wins,
+        // which is exactly the behavior we want either way.
         function start() {
-            if (timer || hovered || !visible) return;
+            if (timer) return;
             timer = setInterval(next, interval);
         }
 
         function stop() {
-            clearInterval(timer);
-            timer = null;
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
         }
 
-        function restart() {
-            stop();
-            start();
-        }
-
-        carousel.addEventListener('mouseenter', () => { hovered = true; stop(); });
-        carousel.addEventListener('mouseleave', () => { hovered = false; start(); });
+        carousel.addEventListener('mouseenter', stop);
+        carousel.addEventListener('mouseleave', start);
 
         if ('IntersectionObserver' in window) {
-            const carouselIo = new IntersectionObserver((entries) => {
+            new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    visible = entry.isIntersecting;
-                    if (visible) start(); else stop();
+                    if (entry.isIntersecting) start();
+                    else stop();
                 });
-            }, { threshold: 0.3 });
-            carouselIo.observe(carousel);
+            }, { threshold: 0.2 }).observe(carousel);
         } else {
-            visible = true;
             start();
         }
     });
