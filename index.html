@@ -236,7 +236,6 @@
         [data-reveal] { opacity: 1; transform: none; transition: none; }
         html { scroll-behavior: auto; }
         .hero-anim { opacity: 1; animation: none; }
-        .signature-name { width: 7.6ch; animation: none; }
     }
 
     /* Hero elements animate on page load (not scroll-triggered) since
@@ -340,10 +339,6 @@
 
     @keyframes sign {
         to { width: 7.6ch; }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .signature-name { width: 7.6ch; animation: none; }
     }
 
     .accent-text {
@@ -848,7 +843,7 @@
         <div class="project" data-reveal>
             <div class="project-info">
                 <span class="project-featured-tag">Featured</span>
-                <h3>Cryptsol 📈</h3>
+                <h3>Cryptsol</h3>
                 <p>
                     A full-stack <strong>crypto signals platform</strong> — a rule-based pattern engine scans the
                     market for high-probability swing setups and issues entry/stop/target signals, tracked live
@@ -886,7 +881,7 @@
         <div class="project reverse" data-reveal>
             <div class="project-info">
                 <span class="project-featured-tag">Featured</span>
-                <h3>Anastelle 🛍️</h3>
+                <h3>Anastelle</h3>
                 <p>
                     A full-stack <strong>e-commerce storefront</strong> built end-to-end — product catalog, cart,
                     deals, and <strong>WhatsApp-based checkout</strong>. A custom admin dashboard uses
@@ -921,7 +916,7 @@
 
         <div class="project" data-reveal>
             <div class="project-info">
-                <h3>Neuro-fix 🧠</h3>
+                <h3>Neuro-fix</h3>
                 <p>
                     A powerful AI hardware assistant. It combines <strong>computer vision (YOLO)</strong>
                     to recognize hardware components and a <strong>Llama-3 RAG</strong> engine to query manuals.
@@ -943,7 +938,7 @@
 
         <div class="project reverse" data-reveal>
             <div class="project-info">
-                <h3>Blood Bank Management System 🩸</h3>
+                <h3>Blood Bank Management System</h3>
                 <p>
                     A full-scale management system featuring a <strong>live dashboard</strong> with real-time updates
                     and <strong>color-coded stock details</strong> for instant inventory awareness.
@@ -1079,7 +1074,6 @@
     // than one screenshot. Starts once the carousel scrolls into view,
     // advances one slide every data-interval ms, loops back to the first
     // after the last, and pauses while the cursor is hovering it.
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.querySelectorAll('[data-carousel]').forEach(carousel => {
         const track = carousel.querySelector('.carousel-track');
         const slides = Array.from(track.children);
@@ -1114,7 +1108,7 @@
         function next() { goTo(index + 1); }
 
         function start() {
-            if (timer || hovered || !visible || prefersReducedMotion) return;
+            if (timer || hovered || !visible) return;
             timer = setInterval(next, interval);
         }
 
