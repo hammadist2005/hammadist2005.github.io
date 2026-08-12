@@ -191,6 +191,29 @@
             border: 1px solid #333;
         }
 
+        .project-gallery {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .project-gallery img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            border: 1px solid #333;
+        }
+
+        .project-gallery .gallery-wide {
+            grid-column: 1 / -1;
+        }
+
+        .project-gallery .gallery-wide img {
+            height: 160px;
+        }
+
         .about-section {
             background-color: #0b0b0b;
             min-height: 100vh;
@@ -270,6 +293,34 @@
 
 <section id="projects" class="projects-section">
     <h2 class="section-title">Featured <span>Work</span></h2>
+
+    <div class="project-card">
+        <div class="project-info">
+            <h3>Anastelle 🛍️</h3>
+            <p>
+                A full-stack <strong>e-commerce storefront</strong> built end-to-end — product catalog, cart,
+                deals, and <strong>WhatsApp-based checkout</strong>. A custom admin dashboard uses
+                <strong>AI-assisted photo analysis</strong> to auto-generate product listings from raw photos
+                and publish them straight to a live database.
+            </p>
+            <div class="tech-stack">
+                <span>Next.js</span> <span>TypeScript</span> <span>Prisma</span> <span>PostgreSQL</span> <span>Tailwind CSS</span>
+            </div>
+            <div class="btn-group">
+                <a href="https://github.com/hammadist2005/anastelle" target="_blank" class="btn-outline">View Code</a>
+                <a href="https://anastelle.vercel.app" target="_blank" class="btn-outline">Live Site</a>
+            </div>
+        </div>
+        <div class="project-img project-gallery">
+            <div class="gallery-wide">
+                <img src="images/anastelle-hero.jpg" alt="Anastelle homepage">
+            </div>
+            <img src="images/anastelle-categories.jpg" alt="Anastelle shop by category">
+            <img src="images/anastelle-deals.jpg" alt="Anastelle deal of the week">
+            <img src="images/anastelle-shop.jpg" alt="Anastelle full catalog grid">
+            <img src="images/anastelle-product.jpg" alt="Anastelle product page">
+        </div>
+    </div>
 
     <div class="project-card">
         <div class="project-info">
