@@ -229,7 +229,28 @@
     @media (prefers-reduced-motion: reduce) {
         [data-reveal] { opacity: 1; transform: none; transition: none; }
         html { scroll-behavior: auto; }
+        .hero-anim { opacity: 1; animation: none; }
+        .signature-name { width: 7.6ch; animation: none; }
     }
+
+    /* Hero elements animate on page load (not scroll-triggered) since
+       they're above the fold from the first paint -- mirrors how the
+       original signature + subtitle used to animate in. */
+    @keyframes heroFadeUp {
+        from { opacity: 0; transform: translateY(14px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-anim {
+        opacity: 0;
+        animation: heroFadeUp 0.8s ease forwards;
+    }
+
+    .hero-anim.d1 { animation-delay: 0s; }
+    .hero-anim.d2 { animation-delay: 1.9s; }
+    .hero-anim.d3 { animation-delay: 2.3s; }
+    .hero-anim.d4 { animation-delay: 2.6s; }
+    .hero-anim.d5 { animation-delay: 2.9s; }
 
     /* ---------- Hero ---------- */
 
@@ -747,21 +768,21 @@
 <section class="hero" id="top">
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container">
-        <p class="status-pill" data-reveal><span class="dot-pulse"></span>Open to new opportunities</p>
-        <h1 class="hero-title" data-reveal><span class="signature-name">Hammad</span></h1>
-        <p class="hero-role" data-reveal>A <strong>Software Developer</strong> who builds AI-powered tools and full-stack products.</p>
-        <p class="hero-sub" data-reveal>
+        <p class="status-pill hero-anim d1"><span class="dot-pulse"></span>Open to new opportunities</p>
+        <h1 class="hero-title"><span class="signature-name">Hammad</span></h1>
+        <p class="hero-role hero-anim d2">A <strong>Software Developer</strong> who builds AI-powered tools and full-stack products.</p>
+        <p class="hero-sub hero-anim d3">
             From a computer-vision hardware assistant to a production e-commerce platform with a live database —
             I like working across the whole stack, from schema design to the pixels on screen.
         </p>
-        <div class="hero-actions" data-reveal>
+        <div class="hero-actions hero-anim d4">
             <a href="#work" class="btn btn-primary">
                 View my work
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </a>
             <a href="#contact" class="btn btn-ghost">Get in touch</a>
         </div>
-        <div class="hero-socials" data-reveal>
+        <div class="hero-socials hero-anim d5">
             <a href="https://github.com/hammadist2005" target="_blank" class="icon-link" aria-label="GitHub">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 4.84 3.13 8.94 7.48 10.39.55.1.75-.24.75-.53 0-.26-.01-.96-.02-1.88-3.04.66-3.68-1.47-3.68-1.47-.5-1.26-1.22-1.6-1.22-1.6-.99-.68.08-.67.08-.67 1.1.08 1.68 1.13 1.68 1.13.98 1.67 2.57 1.19 3.2.91.1-.71.38-1.19.7-1.46-2.43-.28-4.98-1.21-4.98-5.4 0-1.19.42-2.16 1.12-2.92-.11-.28-.49-1.4.11-2.92 0 0 .92-.29 3 1.12a10.5 10.5 0 0 1 5.46 0c2.08-1.41 3-1.12 3-1.12.6 1.52.22 2.64.11 2.92.7.76 1.12 1.73 1.12 2.92 0 4.2-2.56 5.12-5 5.39.39.34.74 1 .74 2.03 0 1.47-.01 2.65-.01 3.01 0 .29.2.64.76.53 4.35-1.45 7.48-5.55 7.48-10.39C23.02 5.24 18.27.5 12 .5z"/></svg>
             </a>
@@ -952,6 +973,21 @@
             menuBtn.classList.remove('open');
             menuBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+        });
+    });
+
+    // Smooth scroll for every in-page anchor link (belt-and-suspenders
+    // alongside the CSS scroll-behavior, so it's reliably smooth --
+    // including the "Back to top" link -- regardless of browser quirks.
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const id = link.getAttribute('href');
+            if (!id || id.length < 2) return;
+            const target = document.querySelector(id);
+            if (!target) return;
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.pushState(null, '', id);
         });
     });
 
