@@ -12,7 +12,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%230a0a0f'/%3E%3Ctext x='50' y='68' font-size='58' font-family='Arial,sans-serif' font-weight='700' fill='%238b7bff' text-anchor='middle'%3EH%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Sacramento&display=swap" rel="stylesheet">
 
 <style>
     :root {
@@ -293,12 +293,30 @@
     }
 
     .hero-title {
-        font-family: var(--display);
-        font-weight: 700;
-        font-size: clamp(2.4rem, 7vw, 4.6rem);
-        line-height: 1.05;
-        letter-spacing: -0.02em;
+        line-height: 1;
         margin-bottom: 18px;
+    }
+
+    .signature-name {
+        display: inline-block;
+        font-family: 'Sacramento', cursive;
+        font-size: clamp(3.6rem, 12vw, 7.2rem);
+        line-height: 1;
+        color: #00e5ff;
+        text-shadow: 0 0 16px rgba(0,229,255,0.45);
+        overflow: hidden;
+        white-space: nowrap;
+        width: 0;
+        animation: sign 2.2s steps(40) forwards;
+        animation-delay: 0.15s;
+    }
+
+    @keyframes sign {
+        to { width: 7.6ch; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .signature-name { width: 7.6ch; animation: none; }
     }
 
     .accent-text {
@@ -730,8 +748,8 @@
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container">
         <p class="status-pill" data-reveal><span class="dot-pulse"></span>Open to new opportunities</p>
-        <h1 class="hero-title" data-reveal>Hi, I'm <span class="accent-text">Hammad</span>.</h1>
-        <p class="hero-role" data-reveal>I'm a <strong>Software Developer</strong> who builds AI-powered tools and full-stack products.</p>
+        <h1 class="hero-title" data-reveal><span class="signature-name">Hammad</span></h1>
+        <p class="hero-role" data-reveal>A <strong>Software Developer</strong> who builds AI-powered tools and full-stack products.</p>
         <p class="hero-sub" data-reveal>
             From a computer-vision hardware assistant to a production e-commerce platform with a live database —
             I like working across the whole stack, from schema design to the pixels on screen.
