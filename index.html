@@ -135,6 +135,12 @@
     .nav-link:hover { color: var(--text); }
     .nav-link:hover::after { width: 100%; }
 
+    /* Persistent underline for whichever section is currently in view --
+       same look/transition as hover, but stays on until you scroll to a
+       different section (toggled via .active in JS). */
+    .nav-link.active { color: var(--text); }
+    .nav-link.active::after { width: 100%; }
+
     .nav-github {
         display: flex;
         align-items: center;
@@ -1017,7 +1023,7 @@
             if (window.scrollY >= top - 220) current = section.getAttribute('id');
         });
         navLinks.forEach(link => {
-            link.style.color = link.getAttribute('href') === '#' + current ? 'var(--text)' : '';
+            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
         });
     }, { passive: true });
 </script>
