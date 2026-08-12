@@ -613,29 +613,66 @@
 
     .project:hover .project-media img { transform: scale(1.035); }
 
-    .gallery-media {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-auto-rows: 1fr;
-        gap: 3px;
+    /* Auto-advancing image carousel, used on projects with more than one
+       screenshot. Slides horizontally, one image at a time, looping back
+       to the first after the last -- pauses on hover, and only runs once
+       the project has actually scrolled into view. */
+    .project-carousel {
+        position: relative;
         aspect-ratio: 16/11;
         border-radius: var(--radius-sm);
         overflow: hidden;
         border: 1px solid var(--border);
+        background: #000;
     }
 
-    .gallery-media img {
+    .carousel-track {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .carousel-slide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .carousel-slide img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
+        display: block;
     }
 
-    .gallery-media .wide {
-        grid-column: 1 / -1;
+    .carousel-dots {
+        position: absolute;
+        left: 50%;
+        bottom: 14px;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 7px;
+        z-index: 2;
     }
 
-    .project:hover .gallery-media img { transform: scale(1.04); }
+    .carousel-dots button {
+        width: 6px;
+        height: 6px;
+        padding: 0;
+        border: none;
+        border-radius: 3px;
+        background: rgba(255,255,255,0.35);
+        cursor: pointer;
+        transition: all 0.25s ease;
+    }
+
+    .carousel-dots button:hover { background: rgba(255,255,255,0.6); }
+
+    .carousel-dots button.active {
+        width: 20px;
+        background: #fff;
+    }
 
     /* ---------- About ---------- */
 
@@ -834,12 +871,15 @@
                     </a>
                 </div>
             </div>
-            <div class="gallery-media">
-                <img class="wide" src="images/cryptsol-hero.jpg" alt="Cryptsol homepage">
-                <img src="images/cryptsol-signals.jpg" alt="Cryptsol live signals feed">
-                <img src="images/cryptsol-trades.jpg" alt="Cryptsol active and closed trades">
-                <img src="images/cryptsol-analytics.jpg" alt="Cryptsol analytics dashboard">
-                <img src="images/cryptsol-wallet.jpg" alt="Cryptsol paper-trading wallet">
+            <div class="project-carousel" data-carousel data-interval="3500">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img src="images/cryptsol-hero.jpg" alt="Cryptsol homepage"></div>
+                    <div class="carousel-slide"><img src="images/cryptsol-signals.jpg" alt="Cryptsol live signals feed"></div>
+                    <div class="carousel-slide"><img src="images/cryptsol-trades.jpg" alt="Cryptsol active and closed trades"></div>
+                    <div class="carousel-slide"><img src="images/cryptsol-analytics.jpg" alt="Cryptsol analytics dashboard"></div>
+                    <div class="carousel-slide"><img src="images/cryptsol-wallet.jpg" alt="Cryptsol paper-trading wallet"></div>
+                </div>
+                <div class="carousel-dots"></div>
             </div>
         </div>
 
@@ -867,12 +907,15 @@
                     </a>
                 </div>
             </div>
-            <div class="gallery-media">
-                <img class="wide" src="images/anastelle-hero.jpg" alt="Anastelle homepage">
-                <img src="images/anastelle-categories.jpg" alt="Anastelle shop by category">
-                <img src="images/anastelle-deals.jpg" alt="Anastelle deal of the week">
-                <img src="images/anastelle-shop.jpg" alt="Anastelle full catalog grid">
-                <img src="images/anastelle-product.jpg" alt="Anastelle product page">
+            <div class="project-carousel" data-carousel data-interval="3500">
+                <div class="carousel-track">
+                    <div class="carousel-slide"><img src="images/anastelle-hero.jpg" alt="Anastelle homepage"></div>
+                    <div class="carousel-slide"><img src="images/anastelle-categories.jpg" alt="Anastelle shop by category"></div>
+                    <div class="carousel-slide"><img src="images/anastelle-deals.jpg" alt="Anastelle deal of the week"></div>
+                    <div class="carousel-slide"><img src="images/anastelle-shop.jpg" alt="Anastelle full catalog grid"></div>
+                    <div class="carousel-slide"><img src="images/anastelle-product.jpg" alt="Anastelle product page"></div>
+                </div>
+                <div class="carousel-dots"></div>
             </div>
         </div>
 
@@ -1030,6 +1073,76 @@
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             history.pushState(null, '', id);
         });
+    });
+
+    // Auto-advancing project image carousels -- only on projects with more
+    // than one screenshot. Starts once the carousel scrolls into view,
+    // advances one slide every data-interval ms, loops back to the first
+    // after the last, and pauses while the cursor is hovering it.
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll('[data-carousel]').forEach(carousel => {
+        const track = carousel.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        if (slides.length < 2) return;
+
+        const dotsWrap = carousel.querySelector('.carousel-dots');
+        const interval = parseInt(carousel.dataset.interval, 10) || 3500;
+        let index = 0;
+        let timer = null;
+        let hovered = false;
+        let visible = false;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.type = 'button';
+            dot.setAttribute('aria-label', `Show image ${i + 1} of ${slides.length}`);
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goTo(i);
+                restart();
+            });
+            dotsWrap.appendChild(dot);
+        });
+        const dots = Array.from(dotsWrap.children);
+
+        function goTo(i) {
+            index = (i + slides.length) % slides.length;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            dots.forEach((d, di) => d.classList.toggle('active', di === index));
+        }
+
+        function next() { goTo(index + 1); }
+
+        function start() {
+            if (timer || hovered || !visible || prefersReducedMotion) return;
+            timer = setInterval(next, interval);
+        }
+
+        function stop() {
+            clearInterval(timer);
+            timer = null;
+        }
+
+        function restart() {
+            stop();
+            start();
+        }
+
+        carousel.addEventListener('mouseenter', () => { hovered = true; stop(); });
+        carousel.addEventListener('mouseleave', () => { hovered = false; start(); });
+
+        if ('IntersectionObserver' in window) {
+            const carouselIo = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    visible = entry.isIntersecting;
+                    if (visible) start(); else stop();
+                });
+            }, { threshold: 0.3 });
+            carouselIo.observe(carousel);
+        } else {
+            visible = true;
+            start();
+        }
     });
 
     // Scroll reveal
